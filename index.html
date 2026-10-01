@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Гонка без травм — Эндуро-квест</title>
+<style>
+:root{--green:#1f5034;--gold:#f4ba35;--cream:#fffaf0;--ink:#2d2117;--dirt:#6b452c}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(#dcefd9,#f4edd9);color:var(--ink)}
+.app{max-width:1280px;margin:auto;padding:14px}.hero,.panel{border-radius:24px;box-shadow:0 9px 28px #0002}.hero{padding:22px 24px;background:linear-gradient(135deg,#173d2a,#5c8e51 58%,#87b866);color:#fff}.tag{display:inline-block;background:var(--gold);color:#2d2100;font-weight:900;padding:7px 12px;border-radius:99px}.hero h1{font-size:clamp(34px,6vw,60px);margin:8px 0 4px}.hero p{font-size:19px;margin:0}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}button{border:0;border-radius:13px;padding:11px 15px;font-weight:900;cursor:pointer;transition:.15s;box-shadow:0 2px 0 #0002}button:hover{transform:translateY(-1px)}button:disabled{opacity:.6;cursor:default;transform:none}.primary{background:var(--gold);color:#2d2100}.light{background:#fff;color:#244b33}.panel{background:#fff;padding:18px;margin-top:14px}.hidden{display:none}.setupGrid{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:end}.inputs{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}.inputs input{padding:12px;border:2px solid #d2decf;border-radius:12px;min-width:170px}.select{padding:12px;border:2px solid #d2decf;border-radius:12px}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.turn{font-size:20px;font-weight:950}.diceBox{display:flex;align-items:center;gap:10px}.dice{font-size:46px;line-height:1}.legend{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}.legend span{padding:7px 10px;border-radius:99px;color:#fff;font-size:12px;font-weight:950}.o{background:#e77e28}.b{background:#337fbd}.p{background:#8053a7}.r{background:#ca4e47}.y{background:#e0a61f;color:#362700!important}.track{height:min(78vw,720px);min-height:520px;position:relative;overflow:hidden;border-radius:28px;background:linear-gradient(#9bd1e0 0 29%,#78a55d 29%);box-shadow:inset 0 0 50px #0003}.mount{position:absolute;bottom:70%;width:0;height:0;border-left:160px solid transparent;border-right:160px solid transparent;border-bottom:170px solid #6d8370;opacity:.7}.m1{left:5%}.m2{right:9%;transform:scale(.8)}.decor{position:absolute;z-index:3;font-size:36px}.d1{left:2%;bottom:4%}.d2{left:11%;top:38%}.d3{left:39%;bottom:3%}.d4{right:2%;top:38%}.d5{right:15%;bottom:4%}.d6{left:69%;top:42%}.d7{right:31%;bottom:8%}.rock{position:absolute;z-index:4;font-size:29px}.rk1{left:22%;top:58%}.rk2{right:28%;top:50%}.rk3{left:53%;bottom:11%}.mud{position:absolute;z-index:2;background:#6d472f;width:96px;height:30px;border-radius:50%;opacity:.64}.mu1{left:29%;top:62%;transform:rotate(-15deg)}.mu2{right:20%;top:34%;transform:rotate(17deg)}
+.trail{position:absolute;inset:0;width:100%;height:100%;z-index:1}.cells{position:absolute;inset:0;z-index:8}.cell{position:absolute;width:41px;height:41px;border:3px solid #fff;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:950;font-size:12px;text-shadow:1px 1px 2px #000;box-shadow:0 3px 8px #0006;transform:translate(-50%,-50%);transition:.2s}.cell.special{width:56px;height:56px;border-radius:16px;font-size:9px;text-align:center;line-height:1.02;padding:3px}.cell.current{box-shadow:0 0 0 4px #fff,0 6px 16px #0009;transform:translate(-50%,-50%) scale(1.18);z-index:12}.flag{position:absolute;z-index:10;background:#fff;border-radius:13px;padding:7px 10px;box-shadow:0 3px 10px #0004;font-weight:950;font-size:13px}.startflag{left:1.3%;bottom:1.5%}.finishflag{right:1.3%;top:18%}
+.token{position:absolute;z-index:14;font-size:31px;transform:translate(-50%,-50%);transition:.45s;text-shadow:0 2px 5px #0005}.tokenStack{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.mini{padding:7px 9px;background:#eff4ec;border-radius:10px;font-weight:900}.score{font-size:13px;color:#56705c;margin-top:4px}.question{margin-top:14px;background:#fff7e5;border-left:8px solid var(--gold);border-radius:17px;padding:17px}.question h2,.question h3{margin:4px 0 10px}.answers{display:grid;gap:9px}.answer{background:#fff;border:2px solid #e0e1dc;text-align:left;box-shadow:none}.answer:hover{border-color:#c2d4bd;background:#fbfff9}.feedback{margin-top:10px;font-weight:950}.good{color:#24723e}.bad{color:#a53732}.event{background:linear-gradient(135deg,#e9f5df,#fff9e5);border:2px dashed #7c9b65}.playerTable{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:12px}.playerCard{background:#f4f7f1;padding:10px 12px;border-radius:13px}.playerCard strong{display:block}.progress{height:8px;border-radius:99px;background:#dce6d9;margin-top:7px;overflow:hidden}.progress i{display:block;height:100%;background:#5f944f}.modal{position:fixed;inset:0;background:#0008;display:flex;align-items:center;justify-content:center;padding:18px;z-index:50}.modalBox{background:#fff;border-radius:22px;padding:24px;max-width:680px;width:100%;position:relative}.close{position:absolute;right:9px;top:8px;border-radius:50%;padding:4px 11px;background:#eee;font-size:22px;box-shadow:none}.heroNote{margin-top:12px;background:#ffffff1a;border-radius:14px;padding:10px 12px;font-size:14px}.choiceTag{display:inline-block;padding:6px 9px;border-radius:99px;background:#edf3e9;font-size:12px;font-weight:950}.reward{font-size:28px}.finalScore{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.finalScore div{background:#f5f7f0;border-radius:14px;padding:12px;text-align:center}.big{font-size:28px;font-weight:950}@media(max-width:760px){.setupGrid{grid-template-columns:1fr}.track{min-height:540px}.cell{width:36px;height:36px;font-size:11px}.cell.special{width:47px;height:47px;font-size:8px}.token{font-size:27px}.playerTable{grid-template-columns:1fr}.finalScore{grid-template-columns:1fr 1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="hero">
+<span class="tag">🏍️ ЭНДУРО-КВЕСТ</span>
+<h1>Гонка без травм</h1>
+<p>Не просто викторина: выбирай, рискуй, помогай себе бонусами и доберись до финиша безопаснее соперников.</p>
+<div class="actions"><button class="primary" onclick="newGame()">Новая игра</button><button class="light" onclick="how()">Как играть</button><button class="light" onclick="safety()">Мой чек-лист</button></div>
+<div class="heroNote">🎯 Цель: первым добраться до финиша и собрать минимум <b>3 жетона безопасности</b>.</div>
+</header>
+
+<section id="setup" class="panel">
+<h2>Кто выходит на трассу?</h2>
+<div class="setupGrid">
+<div><label><b>Игроков:</b> <select id="count" class="select" onchange="makeInputs()"><option value="2">2</option><option value="3">3</option><option value="4">4</option></select></label><div id="inputs" class="inputs"></div></div>
+<button class="primary" onclick="startGame()">🏁 Начать квест</button>
+</div>
+</section>
+
+<section id="game" class="hidden">
+<div class="panel top">
+<div><div class="turn" id="turn"></div><div id="scoreLine" class="score"></div></div>
+<div class="diceBox"><span class="dice" id="dice">⚄</span><button class="primary" id="roll" onclick="roll()">Бросить кубик</button></div>
+</div>
+<div class="legend"><span class="o">🪖 Экипировка</span><span class="b">🔧 Мотоцикл</span><span class="p">🌲 Трасса</span><span class="r">⚠️ Ситуация</span><span class="y">⭐ Безопасное решение</span></div>
+
+<div class="track" id="track">
+<div class="mount m1"></div><div class="mount m2"></div>
+<div class="decor d1">🌲</div><div class="decor d2">🌲</div><div class="decor d3">🌲</div><div class="decor d4">🌲</div><div class="decor d5">🌲</div><div class="decor d6">🌲</div><div class="decor d7">🌲</div>
+<div class="rock rk1">🪨</div><div class="rock rk2">🪨</div><div class="rock rk3">🪨</div><div class="mud mu1"></div><div class="mud mu2"></div>
+<svg class="trail" viewBox="0 0 1000 700" preserveAspectRatio="none"><path d="M75 635 C165 590 105 515 230 475 C345 438 250 370 390 340 C525 310 430 240 555 205 C700 165 585 105 720 100 C825 95 755 165 885 145 C945 135 900 205 935 260 C965 310 875 330 810 350 C730 375 775 435 690 465 C600 500 680 565 570 590 C455 615 515 665 385 660 C275 657 330 615 220 625 C150 632 125 650 75 635" fill="none" stroke="#56341f" stroke-width="148" stroke-linecap="round"/><path d="M75 635 C165 590 105 515 230 475 C345 438 250 370 390 340 C525 310 430 240 555 205 C700 165 585 105 720 100 C825 95 755 165 885 145 C945 135 900 205 935 260 C965 310 875 330 810 350 C730 375 775 435 690 465 C600 500 680 565 570 590 C455 615 515 665 385 660 C275 657 330 615 220 625 C150 632 125 650 75 635" fill="none" stroke="#c88c4b" stroke-width="116" stroke-linecap="round"/><path d="M75 635 C165 590 105 515 230 475 C345 438 250 370 390 340 C525 310 430 240 555 205 C700 165 585 105 720 100 C825 95 755 165 885 145 C945 135 900 205 935 260 C965 310 875 330 810 350 C730 375 775 435 690 465 C600 500 680 565 570 590 C455 615 515 665 385 660 C275 657 330 615 220 625 C150 632 125 650 75 635" fill="none" stroke="#eed39a" stroke-width="6" stroke-dasharray="19 17" stroke-linecap="round"/></svg>
+<div class="flag startflag">🏁<br>СТАРТ</div><div class="flag finishflag">🏁<br>ФИНИШ</div><div id="cells" class="cells"></div>
+</div>
+<div id="question" class="panel"><div class="question"><h3>Бросай кубик и отправляйся на трассу!</h3></div></div>
+<div id="pills" class="playerTable"></div>
+</section>
+
+<div id="modal" class="modal hidden"><div class="modalBox"><button class="close" onclick="closeModal()">×</button><div id="modalText"></div></div></div>
+</div>
+<script>
+const pts=[[7,91],[12,84],[18,77],[25,82],[31,74],[37,68],[43,74],[49,67],[55,61],[61,66],[68,60],[74,65],[82,61],[89,55],[84,48],[77,45],[70,49],[64,43],[58,48],[51,43],[45,37],[39,41],[32,36],[26,41],[20,36],[14,42],[20,30],[27,26],[34,30],[41,24],[48,29],[55,23],[62,18],[69,23],[76,18],[83,24],[90,20],[86,14],[78,12],[69,15],[61,10],[53,15],[45,11],[37,16],[30,12],[23,18],[16,14],[11,21],[18,27],[9,32]];
+const cats=['o','b','p','r','y'];
+const catName={o:'Экипировка',b:'Мотоцикл',p:'Трасса',r:'Ситуация',y:'Безопасное решение'};
+const special={9:['🪖','ЭКИПИРОВКА'],19:['🔧','ПРОВЕРКА'],29:['⚠️','ОПАСНЫЙ УЧАСТОК'],39:['🛑','СТОП\nИ ПОДУМАЙ'],49:['⭐','БЕЗОПАСНОЕ\nРЕШЕНИЕ']};
+const colors={o:'#e77e28',b:'#337fbd',p:'#8053a7',r:'#ca4e47',y:'#e0a61f'};
+const avatars=['🏍️','🦊','🐺','🐯'];
+const bank={
+ o:[
+  ['🪖 Экипировка','Перед стартом ты заметил, что забыл защиту коленей.','Ехать осторожнее без неё','Вернуться и надеть защиту коленей',1,'🛡️ +1 жетон «Защита»'],
+  ['🪖 Экипировка','Друг говорит: «Шлем есть, остальное неважно».','Согласиться','Объяснить, что нужна полная защита',1,'🛡️ +1 жетон «Защита»'],
+  ['🪖 Экипировка','Для чего нужны мотоботы?','Чтобы было красивее','Чтобы защищать стопы и голени',1,'🛡️ +1 жетон «Защита»']
+ ],
+ b:[
+  ['🔧 Мотоцикл','Перед тренировкой рычаг тормоза стал работать непривычно.','Поехать медленнее','Остановиться и сообщить тренеру/взрослому',1,'🔧 +1 жетон «Проверка»'],
+  ['🔧 Мотоцикл','Что важнее проверить перед стартом?','Только бензин','Тормоза, шины и органы управления',1,'🔧 +1 жетон «Проверка»'],
+  ['🔧 Мотоцикл','Ты заметил повреждение на мотоцикле.','Не обращать внимания','Показать взрослому до поездки',1,'🔧 +1 жетон «Проверка»']
+ ],
+ p:[
+  ['🌲 Трасса','На трассе есть незнакомое препятствие.','Пробовать сразу','Сначала оценить препятствие и спросить тренера',1,'🌲 +1 жетон «Осторожность»'],
+  ['🌲 Трасса','Перед тобой пыль и плохая видимость.','Разогнаться','Снизить скорость и увеличить внимание/дистанцию',1,'🌲 +1 жетон «Осторожность»'],
+  ['🌲 Трасса','Ты впервые на этом участке.','Ехать одному впереди','Узнать особенности участка и правила движения',1,'🌲 +1 жетон «Осторожность»']
+ ],
+ r:[
+  ['⚠️ Ситуация','Впереди упал другой ребёнок.','Снизить скорость и действовать по правилам трассы','Быстро проехать мимо на полной скорости',0,'✅ Безопасное решение: +1 безопасность'],
+  ['⚠️ Ситуация','Друг зовёт тебя во время движения.','Отвлечься и ответить','Не отвлекаться и сосредоточиться на трассе',1,'✅ Безопасное решение: +1 безопасность'],
+  ['⚠️ Ситуация','Ты понял, что устал и начинаешь ошибаться.','Продолжать до конца','Снизить темп и сообщить тренеру/взрослому',1,'✅ Безопасное решение: +1 безопасность']
+ ],
+ y:[
+  ['⭐ Решение','Как поступит внимательный новичок?','Выберет контроль и безопасность','Попытается показать максимальную скорость',0,'⭐ +1 жетон безопасности'],
+  ['⭐ Решение','Препятствие слишком сложное.','Остановиться и выбрать безопасный вариант','Рисковать ради красивого прыжка',0,'⭐ +1 жетон безопасности'],
+  ['⭐ Решение','Друг предлагает ехать без защиты.','Отказаться и не рисковать','Согласиться на один круг',0,'⭐ +1 жетон безопасности']
+ ]
+};
+const specials={
+9:{title:'🪖 Пит-стоп экипировки',text:'Перед быстрым отрезком команда проверяет защиту. Собери жетон «Защита».',q:['Что сделаешь, если не хватает защиты коленей?',['Поеду медленнее','Вернусь и надену защиту коленей'],1],good:'🪖 Защита получена! Можно ехать дальше на 1 клетку.'},
+19:{title:'🔧 Пит-стоп механика',text:'Механик заметил проблему. Правильная проверка даст бонус.',q:['Если тормоз работает хуже обычного, что делать?',['Ехать аккуратнее','Остановиться и сообщить тренеру/взрослому'],1],good:'🔧 Проверка пройдена! +1 клетка и жетон «Проверка».'},
+29:{title:'⚠️ Опасный участок',text:'Здесь можно потерять время из-за спешки. Выбирай действие внимательно.',q:['Путь кажется слишком сложным.',['Рискнуть ради скорости','Остановиться и выбрать безопасный вариант'],1],good:'⚠️ Опасность пройдена! +2 клетки.'},
+39:{title:'🛑 Стоп и подумай',text:'Секунда решения может изменить всю гонку.',q:['После падения первым делом нужно…',['Сразу продолжить','Оценить состояние и сообщить тренеру/взрослому'],1],good:'🛑 Решение принято правильно! +1 жетон «Осторожность».'},
+49:{title:'⭐ Финальный выбор',text:'До финиша один шаг. Но безопасный финиш важнее скорости.',q:['Что важнее для новичка?',['Скорость любой ценой','Контроль, внимание и безопасность'],1],good:'⭐ Финальный выбор сделан правильно! Ты прошёл трассу безопасно.'}
+};
+const events=[
+ {title:'💨 Ветер и пыль',text:'Впереди участок с плохой видимостью.',a:'Разогнаться, чтобы быстрее пройти',b:'Снизить скорость и увеличить дистанцию',good:'b',goodText:'🌬️ Отлично. Ты проходишь участок спокойно: +1 клетка.'},
+ {title:'🪨 Камень на траектории',text:'Перед колесом небольшой камень.',a:'Смотреть вперёд и выбрать безопасную траекторию',b:'Резко дёрнуть руль на скорости',good:'a',goodText:'🪨 Хорошая оценка! +1 клетка.'},
+ {title:'🏆 Секретный бонус',text:'Ты нашёл на трассе знак «Безопасный выбор».',a:'Получить жетон и двигаться дальше',b:'Пропустить бонус',good:'a',goodText:'🏆 Бонус получен! +1 жетон «Осторожность» и +1 клетка.'}
+];
+let players=[],pos=[],turnN=0,busy=false,pendingSpecial=false;
+function makeInputs(){inputs.innerHTML='';for(let i=0;i<+count.value;i++)inputs.innerHTML+=`<input id="n${i}" placeholder="Игрок ${i+1}" value="Игрок ${i+1}">`}
+makeInputs();
+function draw(){cells.innerHTML='';pts.forEach((a,i)=>{const d=document.createElement('div');d.className='cell '+(special[i]?'special':'');d.style.left=a[0]+'%';d.style.top=a[1]+'%';d.style.background=i===0?'#245238':(i===49?'#9b3e38':colors[cats[i%5]]);d.id='c'+i;d.innerHTML=special[i]?`${special[i][0]}<br>${special[i][1].replace(/\n/g,'<br>')}`:i+1;cells.appendChild(d)})}
+function renderTokens(){document.querySelectorAll('.token').forEach(x=>x.remove());players.forEach(p=>{const t=document.createElement('div');t.className='token';t.textContent=p.a;t.style.left=pts[p.pos][0]+'%';t.style.top=pts[p.pos][1]+'%';track.appendChild(t)})}
+function renderStatus(){const p=players[turnN];turn.innerHTML=`Ход: ${p.a} <b>${p.name}</b>`;scoreLine.innerHTML=`🏁 ${p.pos+1}/50 · 🛡️ Безопасность: ${p.safety}/5 · ${p.items.map(x=>x).join(' ')||'без жетонов'}`;pills.innerHTML=players.map((x,i)=>`<div class="playerCard"><strong>${x.a} ${x.name}</strong><span>🏁 ${x.pos+1}/50 · 🛡️ ${x.safety}/5</span><div class="tokenStack">${x.items.map(y=>`<span class="mini">${y}</span>`).join('')||'<span class="mini">Пока без бонусов</span>'}</div><div class="progress"><i style="width:${Math.min(100,(x.safety/5)*100)}%"></i></div></div>`).join('');}
+function startGame(){players=[];for(let i=0;i<+count.value;i++)players.push({name:document.getElementById('n'+i).value.trim()||'Игрок '+(i+1),a:avatars[i],pos:0,safety:0,items:[]});turnN=0;busy=false;setup.classList.add('hidden');game.classList.remove('hidden');draw();renderTokens();renderStatus();question.innerHTML=`<div class="question"><span class="choiceTag">🏁 Старт</span><h2>Твоя очередь, ${players[0].name}!</h2><p>Бросай кубик. В этой игре важна не только скорость — правильные решения дают тебе бонусы.</p></div>`;roll.disabled=false}
+function roll(){if(busy)return;busy=true;roll.disabled=true;const n=1+Math.floor(Math.random()*6);dice.textContent=['','⚀','⚁','⚂','⚃','⚄','⚅'][n];const p=players[turnN];p.pos=Math.min(49,p.pos+n);document.querySelectorAll('.cell.current').forEach(x=>x.classList.remove('current'));document.getElementById('c'+p.pos).classList.add('current');renderTokens();renderStatus();setTimeout(()=>land(),380)}
+function land(){const p=players[turnN];if(special[p.pos]){specialCard(p.pos);return}if(p.pos===49){showFinal();return}const cat=cats[p.pos%5];if(Math.random()<0.35){eventCard();}else{askQuestion(cat)} }
+function askQuestion(cat){const q=bank[cat][Math.floor(Math.random()*bank[cat].length)];question.innerHTML=`<div class="question"><span class="choiceTag">${q[0]}</span><h2>${q[1]}</h2><div class="answers"><button class="answer" onclick="resolveQuestion('${cat}',${bank[cat].indexOf(q)},0)">A. ${q[2]}</button><button class="answer" onclick="resolveQuestion('${cat}',${bank[cat].indexOf(q)},1)">B. ${q[3]}</button></div><div id="fb"></div></div>`}
+function resolveQuestion(cat,idx,chosen){const q=bank[cat][idx];lockAnswers();const ok=chosen===q[4];if(ok){players[turnN].safety=Math.min(5,players[turnN].safety+1);let label=cat==='o'?'🛡️':cat==='b'?'🔧':cat==='p'?'🌲':'⭐';players[turnN].items.push(label);if(players[turnN].items.length>5)players[turnN].items.shift();fb.className='feedback good';fb.innerHTML=`✅ Отлично! ${q[5]}<br><span class="reward">+1 🛡️</span>`;pulse('good');}else{const p=players[turnN];let used=false;if(p.items.includes('⭐')){p.items.splice(p.items.indexOf('⭐'),1);used=true}if(used){fb.className='feedback good';fb.innerHTML='🛟 Жетон «Безопасное решение» спасает тебя от штрафа. Продолжай!';}else{p.pos=Math.max(0,p.pos-1);fb.className='feedback bad';fb.innerHTML=`❌ Небезопасный выбор. ${q[2+q[4]]} Лучше вернуться на 1 клетку и ехать внимательнее.`}}renderStatus();renderTokens();setTimeout(nextTurn,1500)}
+function eventCard(){const e=events[Math.floor(Math.random()*events.length)];question.innerHTML=`<div class="question event"><span class="choiceTag">СОБЫТИЕ</span><h2>${e.title}</h2><p>${e.text}</p><div class="answers"><button class="answer" onclick="resolveEvent('${e.good}','a','${encodeURIComponent(e.goodText)}')">A. ${e.a}</button><button class="answer" onclick="resolveEvent('${e.good}','b','${encodeURIComponent(e.goodText)}')">B. ${e.b}</button></div><div id="fb"></div></div>`}
+function resolveEvent(good,chosen,goodText){lockAnswers();const p=players[turnN];const msg=decodeURIComponent(goodText);if(chosen===good){p.safety=Math.min(5,p.safety+1);if(msg.includes('+1 клетка'))p.pos=Math.min(48,p.pos+1);if(msg.includes('жетон'))p.items.push('🌲');fb.className='feedback good';fb.innerHTML=`✅ ${msg}<br>+1 🛡️ безопасность`;}else{if(p.items.includes('🛡️')){p.items.splice(p.items.indexOf('🛡️'),1);fb.className='feedback good';fb.textContent='🛡️ Жетон «Защита» использован — штраф отменён.';}else{p.pos=Math.max(0,p.pos-2);fb.className='feedback bad';fb.textContent='❌ Спешка подвела. Назад на 2 клетки.'}}renderStatus();renderTokens();setTimeout(nextTurn,1500)}
+function specialCard(idx){const s=specials[idx];const q=s.q;question.innerHTML=`<div class="question event"><span class="choiceTag">СПЕЦИАЛЬНАЯ КЛЕТКА</span><h2>${s.title}</h2><p>${s.text}</p><h3>${q[0]}</h3><div class="answers"><button class="answer" onclick="resolveSpecial(${idx},0)">A. ${q[1][0]}</button><button class="answer" onclick="resolveSpecial(${idx},1)">B. ${q[1][1]}</button></div><div id="fb"></div></div>`}
+function resolveSpecial(idx,chosen){lockAnswers();const p=players[turnN],s=specials[idx],correct=s.q[2];if(chosen===correct){p.safety=Math.min(5,p.safety+1);if(idx===9){p.items.push('🛡️');p.pos=Math.min(48,p.pos+1)}if(idx===19){p.items.push('🔧');p.pos=Math.min(48,p.pos+1)}if(idx===29)p.pos=Math.min(48,p.pos+2);if(idx===39)p.items.push('🌲');if(idx===49){renderStatus();renderTokens();setTimeout(showFinal,700);return}fb.className='feedback good';fb.innerHTML=`✅ ${s.good}<br>+1 🛡️ безопасность`;}else{if(idx===29){p.pos=Math.max(0,p.pos-2);fb.className='feedback bad';fb.textContent='❌ Опасный участок оказался слишком сложным. Назад на 2 клетки.'}else{fb.className='feedback bad';fb.textContent='❌ Стоп. Такое решение не помогает ехать безопасно. Остаёшься на месте.'}}renderStatus();renderTokens();setTimeout(nextTurn,1600)}
+function showFinal(){const p=players[turnN];roll.disabled=true;let enough=p.safety>=3;question.innerHTML=`<div class="question"><span class="choiceTag">🏁 ФИНИШ</span><h2>${p.a} ${p.name} приехал к финишу!</h2>${enough?`<p class="good">🏆 У тебя ${p.safety} жетона безопасности. Финиш засчитан!</p><p>Ты умеешь не только ехать быстро, но и принимать безопасные решения.</p><button class="primary" onclick="finishWinner()">🏆 Завершить гонку</button>`:`<p class="bad">У тебя пока только ${p.safety} жетона. Для безопасного финиша нужно 3.</p><p>Выбери правильное решение в финальном испытании.</p><button class="primary" onclick="finalTrial()">⭐ Финальное испытание</button>`}</div>`;renderStatus()}
+function finalTrial(){question.innerHTML=`<div class="question event"><span class="choiceTag">⭐ ФИНАЛЬНОЕ ИСПЫТАНИЕ</span><h2>Три вещи перед стартом</h2><p>Нужно назвать три важных пункта проверки. Выбери самый полный вариант.</p><div class="answers"><button class="answer" onclick="finalAnswer(1)">A. Только бензин и шлем</button><button class="answer" onclick="finalAnswer(0)">B. Защита, тормоза/шины/управление и состояние трассы</button></div><div id="fb"></div></div>`}
+function finalAnswer(ok){lockAnswers();const p=players[turnN];if(ok===0){p.safety=Math.min(5,p.safety+2);fb.className='feedback good';fb.innerHTML='🏆 Финал пройден! Ты собрал знания в одно решение.';setTimeout(finishWinner,1000)}else{fb.className='feedback bad';fb.textContent='❌ Подумай ещё: безопасность начинается с экипировки, мотоцикла и условий трассы.';setTimeout(()=>{busy=false;roll.disabled=false},1200)}}
+function finishWinner(){busy=false;roll.disabled=true;const p=players[turnN];openModal(`<h2>🏆 ${p.a} ${p.name} — мастер безопасной трассы!</h2><div class="finalScore"><div><div class="big">${p.pos+1}</div>клетка</div><div><div class="big">${p.safety}</div>жетонов</div><div><div class="big">${p.items.length}</div>бонусов</div></div><p>Безопасность дала тебе реальный бонус по ходу игры. Именно поэтому здесь недостаточно просто быстрее бросать кубик.</p><button class="primary" onclick="closeModal();newGame()">🔄 Сыграть ещё раз</button>`)}
+function nextTurn(){turnN=(turnN+1)%players.length;busy=false;roll.disabled=false;const p=players[turnN];question.innerHTML=`<div class="question"><span class="choiceTag">ХОД ${turnN+1}</span><h2>Ход игрока ${p.a} ${p.name}</h2><p>Бросай кубик. Трасса может подарить бонус, проверку или опасную ситуацию.</p></div>`;renderStatus()}
+function lockAnswers(){document.querySelectorAll('.answer').forEach(x=>x.disabled=true)}
+function pulse(){document.getElementById('track').animate([{boxShadow:'inset 0 0 50px #0003,0 0 0 0 #fff0'},{boxShadow:'inset 0 0 50px #0003,0 0 0 8px #f4ba35'},{boxShadow:'inset 0 0 50px #0003,0 0 0 0 #fff0'}],{duration:500})}
+function newGame(){game.classList.add('hidden');setup.classList.remove('hidden');roll.disabled=false;}
+function openModal(html){modalText.innerHTML=html;modal.classList.remove('hidden')}
+function closeModal(){modal.classList.add('hidden')}
+function how(){openModal('<h2>🎮 Как играть</h2><p><b>2–4 игрока, 7–12 лет.</b> Бросайте кубик и двигайтесь по извилистой трассе.</p><p>Обычная клетка может дать вопрос или событие. Правильный выбор приносит жетон безопасности. Небезопасный выбор может вернуть на 1–2 клетки назад.</p><p><b>Спецклетки работают по-настоящему:</b> 🪖 Экипировка даёт защиту, 🔧 Проверка даёт бонус, ⚠️ Опасный участок может отбросить назад, 🛑 Стоп и подумай заставляет принять решение, ⭐ Безопасное решение помогает на финише.</p><p><b>Побеждает не просто самый быстрый:</b> до финиша нужно добраться с минимум 3 жетонами безопасности.</p>')}
+function safety(){openModal('<h2>🛡️ Мой чек-лист</h2><p>🪖 шлем · 🥾 мотоботы · 🧤 перчатки · 🦺 защита груди и спины · 🛡️ колени и локти</p><p>🔧 тормоза · 🛞 шины · 🎛️ органы управления · 👀 видимые повреждения</p><p>🌲 знаю трассу · 📏 соблюдаю дистанцию · 🧑‍🏫 слушаю тренера · 🛑 не рискую ради скорости</p>')}
+draw();
+</script>
+</body></html>
